@@ -332,7 +332,7 @@ export const getOrderById = async (req, res) => {
 export const getOrderWithTimestamps = async (req, res) => {
   try {
     const { orderId } = req.params;
-    const order = await orderModel.findById(orderId).populate('customer_id');
+    const order = await orderModel.findById(orderId).populate('customer_id').populate('address_id');
     
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
