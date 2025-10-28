@@ -385,7 +385,7 @@ export const getCurrentOrder = async (req, res) => {
       return res.json({ success: false, message: "User not found" });
     }
     
-    // Find latest order
+    // Find latest order with valid items
     const latestOrder = await orderModel.findOne({
       customer_id: user._id
     }).populate('item_ids').populate('address_id').sort({ createdAt: -1 });
@@ -394,7 +394,13 @@ export const getCurrentOrder = async (req, res) => {
       return res.json({ success: false, message: "No order found" });
     }
     
-    res.json({ success: true, order: latestOrder });
+    // Filter out orders with deleted items
+    const validItems = latestOrder.item_ids.filter(item => item !== null);
+    if (validItems.length === 0) {
+      return res.json({ success: false, message: "No valid items in order" });
+    }
+    
+    res.json({ success: true, order: { ...latestOrder.toObject(), item_ids: validItems } });
   } catch (error) {
     console.error('getCurrentOrder error:', error);
     res.status(500).json({ success: false, message: error.message });
