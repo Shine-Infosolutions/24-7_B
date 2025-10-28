@@ -17,5 +17,5 @@ const itemSchema = new mongoose.Schema({
     addon: [{ type: mongoose.Schema.Types.ObjectId, ref:'addon'}]
 })
 
-const Itemmodel =mongoose.models.items || mongoose.model('items',itemSchema);
+const Itemmodel = mongoose.models.Item || mongoose.model('Item', itemSchema);
 export default Itemmodel;
