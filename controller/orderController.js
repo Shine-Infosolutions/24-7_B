@@ -376,8 +376,11 @@ export const getCurrentOrder = async (req, res) => {
       return res.status(400).json({ success: false, message: "Phone number is required" });
     }
     
+    // Convert phone to number if it's a string
+    const phoneNumber = typeof phone === 'string' ? parseInt(phone) : phone;
+    
     // Find user by phone
-    const user = await userModel.findOne({ phone });
+    const user = await userModel.findOne({ phone: phoneNumber });
     if (!user) {
       return res.json({ success: false, message: "User not found" });
     }
@@ -393,6 +396,7 @@ export const getCurrentOrder = async (req, res) => {
     
     res.json({ success: true, order: latestOrder });
   } catch (error) {
+    console.error('getCurrentOrder error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
