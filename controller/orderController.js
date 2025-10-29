@@ -38,40 +38,40 @@ export const createOrder = async (req, res) => {
     );
 
     // Auto-update order status
-    setTimeout(async () => {
-      await orderModel.findByIdAndUpdate(savedOrder._id, {
-        order_status: 2,
-        'status_timestamps.accepted': new Date()
-      });
-    }, 2 * 60000);
+    // setTimeout(async () => {
+    //   await orderModel.findByIdAndUpdate(savedOrder._id, {
+    //     order_status: 2,
+    //     'status_timestamps.accepted': new Date()
+    //   });
+    // }, 2 * 60000);
     
-    setTimeout(async () => {
-      await orderModel.findByIdAndUpdate(savedOrder._id, {
-        order_status: 3,
-        'status_timestamps.preparing': new Date()
-      });
-    }, 5 * 60000);
+    // setTimeout(async () => {
+    //   await orderModel.findByIdAndUpdate(savedOrder._id, {
+    //     order_status: 3,
+    //     'status_timestamps.preparing': new Date()
+    //   });
+    // }, 5 * 60000);
     
-    setTimeout(async () => {
-      await orderModel.findByIdAndUpdate(savedOrder._id, {
-        order_status: 4,
-        'status_timestamps.prepared': new Date()
-      });
-    }, 18 * 60000);
+    // setTimeout(async () => {
+    //   await orderModel.findByIdAndUpdate(savedOrder._id, {
+    //     order_status: 4,
+    //     'status_timestamps.prepared': new Date()
+    //   });
+    // }, 18 * 60000);
     
-    setTimeout(async () => {
-      await orderModel.findByIdAndUpdate(savedOrder._id, {
-        order_status: 5,
-        'status_timestamps.out_for_delivery': new Date()
-      });
-    }, 20 * 60000);
+    // setTimeout(async () => {
+    //   await orderModel.findByIdAndUpdate(savedOrder._id, {
+    //     order_status: 5,
+    //     'status_timestamps.out_for_delivery': new Date()
+    //   });
+    // }, 20 * 60000);
     
-    setTimeout(async () => {
-      await orderModel.findByIdAndUpdate(savedOrder._id, {
-        order_status: 6,
-        'status_timestamps.delivered': new Date()
-      });
-    }, 40 * 60000);
+    // setTimeout(async () => {
+    //   await orderModel.findByIdAndUpdate(savedOrder._id, {
+    //     order_status: 6,
+    //     'status_timestamps.delivered': new Date()
+    //   });
+    // }, 40 * 60000);
 
     res.status(201).json({ message: "Order placed", order: savedOrder, user: updateduser });
   } catch (err) {
@@ -100,12 +100,11 @@ export const updateStatus = async (req, res) => {
     const updateData = { order_status: newStatus };
     const statusMap = {
       1: 'pending',
-      2: 'accepted',
-      3: 'preparing', 
-      4: 'prepared',
-      5: 'out_for_delivery',
-      6: 'delivered',
-      7: 'cancelled'
+      2: 'preparing', 
+      3: 'prepared',
+      4: 'out_for_delivery',
+      5: 'delivered',
+      6: 'cancelled'
     };
     
     if (statusMap[newStatus]) {
@@ -186,12 +185,11 @@ export const getOrderStatus = async (req, res) => {
     
     const statusNames = {
       1: 'PENDING',
-      2: 'ACCEPTED',
-      3: 'PREPARING',
-      4: 'PREPARED',
-      5: 'OUT_FOR_DELIVERY', 
-      6: 'DELIVERED',
-      7: 'CANCELLED'
+      2: 'PREPARING',
+      3: 'PREPARED',
+      4: 'OUT_FOR_DELIVERY', 
+      5: 'DELIVERED',
+      6: 'CANCELLED'
     };
     
     res.status(200).json({
@@ -221,12 +219,11 @@ export const getOrdersByStatus = async (req, res) => {
     
     const statusNames = {
       1: 'PENDING',
-      2: 'ACCEPTED', 
-      3: 'PREPARING',
-      4: 'PREPARED',
-      5: 'OUT_FOR_DELIVERY',
-      6: 'DELIVERED',
-      7: 'CANCELLED'
+      2: 'PREPARING',
+      3: 'PREPARED',
+      4: 'OUT_FOR_DELIVERY',
+      5: 'DELIVERED',
+      6: 'CANCELLED'
     };
     
     res.status(200).json({
@@ -340,12 +337,11 @@ export const getOrderWithTimestamps = async (req, res) => {
     
     const statusNames = {
       1: 'PENDING',
-      2: 'ACCEPTED', 
-      3: 'ORDER PREPARING',
-      4: 'ORDER PREPARED',
-      5: 'OUT FOR DELIVERY',
-      6: 'ORDER DELIVERED',
-      7: 'ORDER CANCELLED'
+      2: 'ORDER PREPARING',
+      3: 'ORDER PREPARED',
+      4: 'OUT FOR DELIVERY',
+      5: 'ORDER DELIVERED',
+      6: 'ORDER CANCELLED'
     };
     
     const response = {
@@ -353,7 +349,6 @@ export const getOrderWithTimestamps = async (req, res) => {
       current_status: statusNames[order.order_status],
       timeline: {
         pending: order.status_timestamps.pending,
-        accepted: order.status_timestamps.accepted,
         preparing: order.status_timestamps.preparing,
         prepared: order.status_timestamps.prepared,
         out_for_delivery: order.status_timestamps.out_for_delivery,
