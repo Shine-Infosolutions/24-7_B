@@ -3,6 +3,7 @@ import userModel from "../models/usermodel.js";
 import "../models/usermodel.js"; // Ensure model is registered
 import addressModel from "../models/addressmodel.js";
 import Itemmodel from "../models/itemmodel.js";
+import addonModel from "../models/addonmodel.js";
 
 export const createOrder = async (req, res) => {
   try {
