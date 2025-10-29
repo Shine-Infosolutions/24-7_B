@@ -19,7 +19,6 @@ const orderSchema = new mongoose.Schema({
   order_source: {type: String,enum: ['Online', 'offline'], default: 'Online'},
   status_timestamps: {
     pending: {type: Date, default: Date.now},
-    accepted: {type: Date},
     preparing: {type: Date},
     prepared: {type: Date},
     out_for_delivery: {type: Date},
